@@ -83,7 +83,7 @@ pipeline{
      stage("trigger cd pipeline"){
         steps {
             script{
-                sh sh "curl -v -k --user admin:11e8055125d8db873b438c9ba575208302 -X POST -H 'cache-control: no-cache' -H 'content-type: application/x-www-form-urlencoded' --data 'IMAGE_TAG=${IMAGE_TAG}' 'http://18.223.102.36:8080/job/cd/buildWithParameters?token=gitops-token'"
+                sh  "curl -v -k --user admin:11e8055125d8db873b438c9ba575208302 -X POST -H 'cache-control: no-cache' -H 'content-type: application/x-www-form-urlencoded' --data 'IMAGE_TAG=${IMAGE_TAG}' 'http://18.223.102.36:8080/job/cd/buildWithParameters?token=gitops-token'"
             }    
      }
      }
