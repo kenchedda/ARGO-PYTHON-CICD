@@ -1,0 +1,56 @@
+pipeline{
+    agent{
+        label "build"
+    }
+    environment{
+       
+        APP_NAME = "gitops-argo-app"
+     
+    }
+
+     stages{
+        stage ("Cleanup Workspace"){
+            steps {
+                cleanWs()
+            }
+        }
+        stage ("checkout scm"){
+             steps {
+                script {
+                    git branch: 'master', credentialsId: 'github', url: 'https://github.com/kenchedda/gitops-argo.git'
+                }
+             } 
+        }
+     
+
+    stage("updating kubernetes deployment file"){
+        steps{
+            script{
+
+                sh  """
+                cat deployment.yaml
+                sed -i 's/${APP_NAME}.*/${APP_NAME}:${IMAGE_TAG}/g' deployment.yaml
+                cat deployment.yaml
+                """
+            }
+        }
+    }
+
+    stage("push deployment.yaml to git"){ 
+         steps {
+            script {
+                sh """
+                git config --global user.name "kenchedda"
+                git config --global user.email "kenappiah@gmail.com"
+                git add deployment.yaml
+                git commit -m "updated the deployment file"
+                """
+                withCredentials([gitUsernamePassword(credentialsId: 'github', gitToolName: 'Default')]) {
+                sh "git push https://github.com/kenchedda/gitops-argo.git master"
+}
+            }
+         }   
+     }
+
+}  
+}                  
