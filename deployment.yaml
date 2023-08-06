@@ -5,7 +5,7 @@ metadata:
   labels:
     app: flask
 spec:
-  replicas: 2
+  replicas: 5
   selector:
     matchLabels:
       app: flask
@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
       - name: flask-container
-        image: kenappiah/gitops-argo-app:15
+        image: kenappiah/gitops-argo-app:16
         ports:
         - containerPort: 5000
