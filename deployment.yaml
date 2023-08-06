@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
       - name: flask-container
-        image: kenappiah/gitops-argo-app:10
+        image: kenappiah/gitops-argo-app:11
         ports:
         - containerPort: 5000
